@@ -50,12 +50,13 @@ def is_armstrong(n):
     Args:
         n (int): Integer number to check
     
-    Returns
+    Returns:
         bool: True if Armstrong number, False otherwise
     """
-    digits = [int(d) for d in str(n)]  # Extract digits
+    n_abs = abs(n)  # Use absolute value to handle negative numbers
+    digits = [int(d) for d in str(n_abs)]  # Extract digits
     num_digits = len(digits)
-    return sum(d ** num_digits for d in digits) == n
+    return sum(d ** num_digits for d in digits) == n_abs
 
 def digit_sum(n):
     """
@@ -67,7 +68,7 @@ def digit_sum(n):
     Returns:
         int: Sum of digits of n
     """
-    return sum(int(d) for d in str(n))
+    return sum(int(d) for d in str(abs(n)))  # Use absolute value to handle negative numbers
 
 def get_fun_fact(n):
     """
@@ -88,7 +89,7 @@ def get_fun_fact(n):
     
     try:
         # Making a request to Numbers API to fetch a math-related fact
-        response = requests.get(f"{NUMBERS_API_URL}/{n}/math", timeout=5)
+        response = requests.get(f"{NUMBERS_API_URL}/{abs(int(n))}/math", timeout=5)
         if response.status_code == 200:
             return response.text  # Return the API response as the fun fact
     except requests.RequestException:
@@ -117,12 +118,13 @@ def classify_number():
         return jsonify({"number": "alphabet", "error": True}), 400
     number = int(number)
     
-    number = int(number)
     properties = []
     if is_armstrong(number):
         properties.append("armstrong")
     if number % 2 != 0:
         properties.append("odd")
+    else:
+        properties.append("even")
     
     # Return JSON response containing number properties and a fun fact
     return jsonify({
