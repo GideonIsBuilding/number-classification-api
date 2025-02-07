@@ -116,15 +116,9 @@ def classify_number():
     if not number.lstrip('-').isdigit():  # Check if input is not a number
         return jsonify({"number": "alphabet", "error": True}), 400
     number = int(number)
-    if number < 0:
-        return jsonify({"number": "negative number", "error": True}), 400
     
     number = int(number)
     properties = []
-    if is_prime(number):
-        properties.append("prime")
-    if is_perfect(number):
-        properties.append("perfect")
     if is_armstrong(number):
         properties.append("armstrong")
     if number % 2 != 0:
