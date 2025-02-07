@@ -108,6 +108,8 @@ def classify_number():
     Returns:
         object: JSON containing classification details
     """
+    print("Received request args:", request.args)
+    print("Full URL:", request.url)
     number = request.args.get('number')  # Get number from query parameters
     if number is None:
         return jsonify({"number": "missing input", "error": True}), 400
